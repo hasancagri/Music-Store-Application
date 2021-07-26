@@ -1,0 +1,75 @@
+﻿@page "/updatealbum/{albumId:int}"
+@inject IAlbumService AlbumService
+@inject IGenreService GenreService
+@inject IArtistService ArtistService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+
+@if (AlbumUpdateForDto == null)
+{
+    <em>Loading...</em>
+}
+else
+{
+    <EditForm Model="AlbumUpdateForDto" OnValidSubmit="Update">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label for="title">Title</label>
+            <InputText @bind-Value="AlbumUpdateForDto.Title" Class="form-control" />
+            <ValidationMessage For="@(()=>AlbumUpdateForDto.Title)" />
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <InputNumber @bind-Value="AlbumUpdateForDto.Price" Class="form-control" />
+            <ValidationMessage For="@(()=>AlbumUpdateForDto.Price)" />
+        </div>
+        <div class="form-group">
+            <label for="ArtistId">Artist</label>
+            <InputSelectNumber @bind-Value="AlbumUpdateForDto.ArtistId" Class="form-control">
+                <option value="">Select Artist</option>
+                @foreach (var artist in ArtistList)
+                    {
+                    <option value="@artist.ArtistId">@artist.Name</option>
+                    }
+            </InputSelectNumber>
+            <ValidationMessage For="@(()=>AlbumUpdateForDto.ArtistId)" />
+        </div>
+        <div class="form-group">
+            <label for="GenreId">Genre</label>
+            <InputSelectNumber Class="form-control" Id="genreId" @bind-Value="@AlbumUpdateForDto.GenreId">
+                <option value="">Select Genre</option>
+                @foreach (var genre in GenreList)
+                    {
+                    <option value=@genre.GenreId>@genre.Name</option>
+                    }
+            </InputSelectNumber>
+            <ValidationMessage For="@(()=>AlbumUpdateForDto.GenreId)" />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int AlbumId { get; set; }
+
+    AlbumUpdateForDto AlbumUpdateForDto;
+    ArtistSelectListForDto[] ArtistList;
+    GenreSelectListForDto[] GenreList;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var token = await localStorage.GetItemAsync<string>("token");
+        AlbumUpdateForDto = await AlbumService.GetById(AlbumId, token);
+        ArtistList = await ArtistService.GetSelectList();
+        GenreList = await GenreService.GetSelectList();
+    }
+
+    public async Task Update()
+    {
+        var token = await localStorage.GetItemAsync<string>("token");
+        await AlbumService.Update(AlbumUpdateForDto, token);
+        NavigationManager.NavigateTo("/dashboard");
+        //Burada try-catch olacak
+    }
+}

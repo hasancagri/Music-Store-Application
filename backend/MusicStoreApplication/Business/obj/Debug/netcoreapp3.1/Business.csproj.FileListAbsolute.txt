@@ -1,0 +1,16 @@
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\bin\Debug\netcoreapp3.1\Business.deps.json
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\bin\Debug\netcoreapp3.1\Business.dll
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\obj\Debug\netcoreapp3.1\Business.csprojAssemblyReference.cache
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\obj\Debug\netcoreapp3.1\Business.AssemblyInfoInputs.cache
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\obj\Debug\netcoreapp3.1\Business.AssemblyInfo.cs
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\obj\Debug\netcoreapp3.1\Business.csproj.CoreCompileInputs.cache
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\bin\Debug\netcoreapp3.1\Core.dll
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\bin\Debug\netcoreapp3.1\DataAccess.dll
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\bin\Debug\netcoreapp3.1\Entities.dll
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\bin\Debug\netcoreapp3.1\Business.pdb
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\bin\Debug\netcoreapp3.1\Core.pdb
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\bin\Debug\netcoreapp3.1\DataAccess.pdb
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\bin\Debug\netcoreapp3.1\Entities.pdb
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\obj\Debug\netcoreapp3.1\Business.csproj.CopyComplete
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\obj\Debug\netcoreapp3.1\Business.dll
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Business\obj\Debug\netcoreapp3.1\Business.pdb

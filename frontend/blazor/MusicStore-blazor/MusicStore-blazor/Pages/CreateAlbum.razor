@@ -1,0 +1,67 @@
+﻿@page "/createalbum"
+@inject IAlbumService AlbumService
+@inject IGenreService GenreService
+@inject IArtistService ArtistService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+
+<EditForm Model="AlbumCreateForDto" OnValidSubmit="Create">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="title">Title</label>
+        <InputText @bind-Value="AlbumCreateForDto.Title" Class="form-control" />
+        <ValidationMessage For="@(()=>AlbumCreateForDto.Title)" />
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <InputNumber @bind-Value="AlbumCreateForDto.Price" Class="form-control" />
+        <ValidationMessage For="@(()=>AlbumCreateForDto.Price)" />
+    </div>
+    @if (ArtistList != null)
+    {
+        <div class="form-group">
+            <label for="ArtistId">Artist</label>
+            <InputSelectNumber @bind-Value="AlbumCreateForDto.ArtistId" Class="form-control">
+                <option value="">Select Artist</option>
+                @foreach (var artist in ArtistList)
+                    {
+                    <option value="@artist.ArtistId">@artist.Name</option>
+                    }
+            </InputSelectNumber>
+            <ValidationMessage For="@(()=>AlbumCreateForDto.ArtistId)" />
+        </div>
+    }
+    @if (GenreList != null)
+    {
+        <div class="form-group">
+            <label for="GenreId">Genre</label>
+            <InputSelectNumber Class="form-control" Id="genreId" @bind-Value="@AlbumCreateForDto.GenreId">
+                <option value="">Select Genre</option>
+                @foreach (var genre in GenreList)
+                    {
+                    <option value=@genre.GenreId>@genre.Name</option>
+                    }
+            </InputSelectNumber>
+            <ValidationMessage For="@(()=>AlbumCreateForDto.GenreId)" />
+        </div>
+    }
+    <button type="submit" class="btn btn-primary">Create</button>
+</EditForm>
+@code {
+    AlbumCreateForDto AlbumCreateForDto = new AlbumCreateForDto();
+    ArtistSelectListForDto[] ArtistList;
+    GenreSelectListForDto[] GenreList;
+
+    protected async override Task OnInitializedAsync()
+    {
+        ArtistList = await ArtistService.GetSelectList();
+        GenreList = await GenreService.GetSelectList();
+    }
+
+    public async Task Create()
+    {
+        var token = await localStorage.GetItemAsync<string>("token");
+        await AlbumService.Create(AlbumCreateForDto, token);
+        NavigationManager.NavigateTo("/dashboard");
+    }
+}

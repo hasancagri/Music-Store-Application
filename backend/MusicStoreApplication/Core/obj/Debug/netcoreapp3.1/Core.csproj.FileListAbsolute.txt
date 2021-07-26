@@ -1,0 +1,9 @@
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Core\bin\Debug\netcoreapp3.1\Core.deps.json
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Core\bin\Debug\netcoreapp3.1\Core.dll
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Core\obj\Debug\netcoreapp3.1\Core.csprojAssemblyReference.cache
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfoInputs.cache
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfo.cs
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Core\bin\Debug\netcoreapp3.1\Core.pdb
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Core\obj\Debug\netcoreapp3.1\Core.dll
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Core\obj\Debug\netcoreapp3.1\Core.pdb
+D:\Kodlar\Music Store Application\backend\MusicStoreApplication\Core\obj\Debug\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache

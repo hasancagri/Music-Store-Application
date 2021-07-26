@@ -1,0 +1,37 @@
+﻿@page "/login"
+@inject IJSRuntime jsRuntime
+@inject IAuthService AuthService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+
+<EditForm Model="UserForLoginDto" OnValidSubmit="LoginUser">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="title">Title</label>
+        <InputText @bind-Value="UserForLoginDto.Email" Type="email" Class="form-control" />
+        <ValidationMessage For="@(()=>UserForLoginDto.Email)" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <InputText @bind-Value="UserForLoginDto.Password" Type="password" Class="form-control" />
+        <ValidationMessage For="@(()=>UserForLoginDto.Password)" />
+    </div>
+    <button class="btn btn-primary" type="submit">Login</button>
+</EditForm>
+
+@code {
+    UserForLoginDto UserForLoginDto = new UserForLoginDto();
+    public async Task LoginUser()
+    {
+        try
+        {
+            AccessToken accessToken = await AuthService.Login(UserForLoginDto);
+            await localStorage.SetItemAsync<string>("token", accessToken.Token);
+            NavigationManager.NavigateTo("/dashboard");
+        }
+        catch
+        {
+            await jsRuntime.InvokeVoidAsync("alert", "Login İşlemi Esnasında Hata Meydana Geldi!");
+        }
+    }
+}

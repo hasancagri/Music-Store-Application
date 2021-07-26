@@ -1,0 +1,46 @@
+﻿@page "/genrelist"
+@inject IGenreService GenreService
+@inject IAlbumService AlbumService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject AlbumListStore AlbumStore
+
+@if (genreList == null)
+{
+    <em>Loading...</em>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var genre in genreList)
+        {
+            string css = "list-group-item";
+            if (genre.GenreId == CurrentGenreId)
+            {
+                css += " active";
+            }
+            <li @onclick="@(()=>ChangeCurrentGenre(genre.GenreId))" class=@css>@genre.Name X (@genre.AlbumCount)</li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter]
+    public int CurrentGenreId { get; set; }
+
+
+    private Genre[] genreList;
+    private Album[] albumList;
+    protected override async Task OnInitializedAsync()
+    {
+        genreList = await GenreService.GetList();
+        AlbumStore.AddStateChangeListeners(() => { StateHasChanged(); });
+    }
+
+    public async Task ChangeCurrentGenre(int genreId)
+    {
+        Task.WaitAll(Task.Run(() => { CurrentGenreId = genreId; }));
+        var token = await localStorage.GetItemAsync<string>("token");
+        albumList = await AlbumService.GetListByGenreId(CurrentGenreId, token);
+        AlbumStore.GetList(albumList);
+    }
+}

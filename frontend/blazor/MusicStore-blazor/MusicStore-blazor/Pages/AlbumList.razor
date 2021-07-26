@@ -1,0 +1,66 @@
+﻿@page "/albumlist"
+@inject IAlbumService AlbumService
+@inject NavigationManager NavigationManager
+@inject AlbumListStore AlbumStore
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@if (AlbumStore.GetAlbumStateList().AlbumList == null)
+{
+    <em>Loading...</em>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Artist</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var album in AlbumStore.GetAlbumStateList().AlbumList)
+            {
+                <tr>
+                    <th scope="row">@album.AlbumId</th>
+                    <td>@album.Title</td>
+                    <td>@album.Price</td>
+                    <td>@album.GenreName</td>
+                    <td>@album.ArtistName</td>
+                    <td><button type="button" class="btn btn-primary" @onclick="(()=>GoToUpdate(album.AlbumId))">Update</button></td>
+                    <td><button type="button" class="btn btn-primary" @onclick="(()=>GoToDelete(album.AlbumId))">Delete</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Album[] albumList;
+    protected override async Task OnInitializedAsync()
+    {
+        AlbumStore.AddStateChangeListeners(() => { StateHasChanged(); });
+        try
+        {
+            string token = await localStorage.GetItemAsync<string>("token");
+            albumList = await AlbumService.GetList(token);
+            AlbumStore.GetList(albumList);
+        }
+        catch
+        {
+            await localStorage.RemoveItemAsync("token");
+            NavigationManager.NavigateTo("/login");
+        }
+    }
+
+    public void GoToUpdate(int albumId)
+    {
+        NavigationManager.NavigateTo("/updatealbum/" + albumId);
+    }
+
+    public void GoToDelete(int albumId)
+    {
+        NavigationManager.NavigateTo("/deletealbum/" + albumId);
+    }
+}

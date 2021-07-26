@@ -1,0 +1,41 @@
+﻿@page "/deletealbum/{albumId:int}"
+@inject IAlbumService AlbumService
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager NavigationManager
+
+@if (AlbumDeleteForDto == null)
+{
+    <em>Loading...</em>
+}
+else
+{
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="/images/delete-icon.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">@AlbumDeleteForDto.Title</h5>
+            <p class="card-text">Price : @AlbumDeleteForDto.Price</p>
+            <p class="card-text">Artist : @AlbumDeleteForDto.ArtistName</p>
+            <p class="card-text">Genre : @AlbumDeleteForDto.GenreName</p>
+            <a href="#" class="btn btn-primary" @onclick="Delete">Delete</a>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int AlbumId { get; set; }
+
+    AlbumDeleteForDto AlbumDeleteForDto;
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await localStorage.GetItemAsync<string>("token");
+        AlbumDeleteForDto = await AlbumService.GetByIdForDeleting(AlbumId, token);
+    }
+
+    public async Task Delete()
+    {
+        var token = await localStorage.GetItemAsync<string>("token");
+        await AlbumService.Delete(AlbumDeleteForDto, token);
+        NavigationManager.NavigateTo("/dashboard");
+    }
+}
